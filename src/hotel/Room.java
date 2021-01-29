@@ -13,8 +13,12 @@ public class Room {
         
     private int roomID;
     private String roomName = "Standard single room";
-    private String typeOfBed = "Sandard single bed";
-    private String roomDescription = "Standard room. Bathroom with shower. Safe. Teakettle. Iron with iron board. Pateo view. Desk and restchair.";
+    private String typeOfBed = "Standard single bed";
+    private String viewFromRoom = "Pateo view";
+    private String bathroomUitilities = "Toilet, zink, shower";
+    private String furniture = "Television. Tea kettle. Iron with iron board. Desk and restchair";
+    private String roomDescription = "Room description: " + roomName + ". The room comes with a safe for your passport,"
+            + " money etc. " + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+"." ;
     private boolean airCondition = false;
     private boolean freeBreakfast = true;
     private boolean isRoomAvailable = true;
@@ -97,6 +101,31 @@ public class Room {
         this.chargePerDay = chargePerDay;
     }
 
+    public String getViewFromRoom() {
+        return viewFromRoom;
+    }
+
+    public void setViewFromRoom(String viewFromRoom) {
+        this.viewFromRoom = viewFromRoom;
+    }
+
+    public String getBathroomUitilities() {
+        return bathroomUitilities;
+    }
+
+    public void setBathroomUitilities(String bathroomUitilities) {
+        this.bathroomUitilities = bathroomUitilities;
+    }
+
+    public String getFurniture() {
+        return furniture;
+    }
+
+    public void setFurniture(String furniture) {
+        this.furniture = furniture;
+    }
+
+    
     @Override
     public String toString() {
         return "Room{" + "roomID=" + roomID + ", roomName=" + roomName + ", typeOfBed=" + typeOfBed + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay + '}';

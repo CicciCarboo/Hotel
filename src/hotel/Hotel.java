@@ -20,7 +20,7 @@ public class Hotel{
       
                 
         
-        // Customer view(skapa en meny för att välja mellan olika alternativ):
+//         Customer view(skapa en meny för att välja mellan olika alternativ):
         while (!exit) {
 
                 System.out.println("Make your choice!");
@@ -55,7 +55,9 @@ public class Hotel{
                     default:
                         exit = true;
                 }
-            }
+    }
+            
+            
 
 
                
