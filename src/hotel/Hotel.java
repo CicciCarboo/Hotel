@@ -7,7 +7,11 @@ public class Hotel {
 
     public static void main(String[] args) {
 
-
+        Room room1 = new Room();
+        
+        room1.setRoomID(1);
+        
+        System.out.println("Room nr 1: " + room1);
     }
     
 }
