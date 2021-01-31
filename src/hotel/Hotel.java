@@ -21,9 +21,9 @@ public static void main(String[] args) {
 //    Food f = new Food();
 //        System.out.println("class food:" + f);
     
-    Room.roomAvailability();
+    
 //startMenu();
-          
+          Room.roomAvailability();
 }
 
     public static void startMenu() {

@@ -133,20 +133,13 @@ public class Room {
     
      @Override
     public String toString() {
-        return "Room{" + "roomID=" + roomID + ", roomName=" + roomName + ", typeOfBed=" + typeOfBed + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay + '}';
+        return "Room{" + "roomID=" + roomID + ", roomName=" + roomName + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay+ ", typeOfBed=" + typeOfBed + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + '}';
     }
     
-    public static void generateHotel(){
+    public static void generateHotel(){         // author C. Carboo
         
-        // Trying to autofill the rooms
-                   
-            // try this later on: IntStream.range(0, 10).map(y -> 2 + y * 2).forEach(arraylist::add);
-            
-//  Trial nr 144: following doesnt work due to static variables. Thats why all entries get the
-//  same value. If I make them non static they dont worc in the methods later on. Remove statics. CHECK!!!
-// How to we get it to work with methods without statics?
-
-
+        // Autofilling the hotel with rooms
+                                               // For fun: try this later on: IntStream.range(0, 10).map(y -> 2 + y * 2).forEach(arraylist::add);
         for (int i = 0; i < 10; i++) {
             hotel.add(new Room());  
         }               
@@ -169,18 +162,18 @@ public class Room {
             room.setRoomID("R"+i);
         }           
 
-        System.out.println("Whats in the hotel?");
-            
-        for (Room room : hotel) {
-            System.out.println(room);
-        }
-                        
-        System.out.println("Hur många rum blev det i hotellet? Svar: "+hotel.size());    
-            
+//        System.out.println("Whats in the hotel?");
+//            
+//        for (Room room : hotel) {
+//            System.out.println(room);
+//        }
+//                        
+//        System.out.println("Hur många rum blev det i hotellet? Svar: "+hotel.size());    
+//            
     }
     
-    public void displayRoom(){  // these methods can only be called from the object since they are non static.
-        System.out.println(roomDescription);
+    public static void displayRoom(){ // make Generic???
+        System.out.println();
     }
     
   
