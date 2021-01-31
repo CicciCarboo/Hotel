@@ -12,7 +12,7 @@ public class Hotel{
 public static void main(String[] args) {
       
                       
-//       Room.generateHotel();
+       Room.generateHotel();
        
        
 //    Menu m = new Menu();
@@ -21,8 +21,8 @@ public static void main(String[] args) {
 //    Food f = new Food();
 //        System.out.println("class food:" + f);
     
-    
-startMenu();
+    Room.roomAvailability();
+//startMenu();
           
 }
 

@@ -1,3 +1,4 @@
+//      author C. Carboo
 
 package hotel;
 

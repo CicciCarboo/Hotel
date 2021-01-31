@@ -1,11 +1,8 @@
 
 /* QUESTIONS
-1) How to autoincrement oblects ID's.? Svar: kolla video @timestamp: 23:00 min: https://youtu.be/CnVp7T-eA5A
-2) How many rooms of each in hotel?
-3) Satic variables are messing things up. Lets try non static room ID and call it from database in RoomAvailability-method instead?
-
-
 */
+
+//          author C. Carboo
 package hotel;
 
 import java.util.LinkedList;
@@ -180,15 +177,6 @@ public class Room {
                         
         System.out.println("Hur många rum blev det i hotellet? Svar: "+hotel.size());    
             
-    //
-//  Now trying the monster approch from Felicias dungeon run. Making a stack fisrt...
-        
-//        int totalNrHotelRooms = 0;
-//        int nrOfStandardRooms = 10;
-//        int nrOfSingleDeluxe = 5;
-//        int nrOfDoubleDeluxe = 5;
-//        int nrOfLuxury = 5;
-//            totalNrHotelRooms = nrOfStandardRooms+nrOfSingleDeluxe+nrOfDoubleDeluxe+nrOfLuxury;
     }
     
     public void displayRoom(){  // these methods can only be called from the object since they are non static.
@@ -196,91 +184,98 @@ public class Room {
     }
     
   
-    public static void roomAvailability(){
-       
+    public static void roomAvailability(){      // author C. Carboo
+
+//      Prompting user to choose room catecory from the menu. 
+//      Given choice will display rooms according to category, via other methods.         
         boolean exit = false;
-        do {            
+        do {                  
+            System.out.println("\n\n********************** BOOKING ROOM ***********************");
             
-       
-        System.out.println("\n\n********************** BOOKING ROOM ***********************");
-        
-        System.out.println("\nSelect one of following options: ");
-        System.out.println("\n1. Standard single room, 1000 SEK/night. ");
-        System.out.println("2. Single deluxe room, 1500 SEK/night. ");
-        System.out.println("3. Double deluxe room, 2000 SEK/night. ");
-        System.out.println("4. Luxury room, 3000 SEK/night. ");
-        System.out.println("5. Exit to previous menu. ");
-        
-        int option = input.nextInt();
-        input.nextLine();
-        String choice;
-        switch(option){
-            case 1:
-                choice = "Standard single room";
-                findRoomCategory(choice);
-                bookRoom();
-                break;
-            case 2:
-                choice = "Single deluxe room";
-                findRoomCategory(choice);
-                bookRoom();
-                break;
-            case 3:
-                choice = "Double deluxe room";
-                findRoomCategory(choice);
-                bookRoom();
-                break;
-            case 4:
-                choice = "Luxury room";
-                findRoomCategory(choice);
-                bookRoom();
-                break;
-            default:
-                System.out.println("Exiting to previous menu.");
-                exit = true;
-                break;
-        }
-        
+            System.out.println("\nSelect one of following options: ");
+            System.out.println("\n1. Standard single room, 1000 SEK/night. ");
+            System.out.println("2. Single deluxe room, 1500 SEK/night. ");
+            System.out.println("3. Double deluxe room, 2000 SEK/night. ");
+            System.out.println("4. Luxury room, 3000 SEK/night. ");
+            System.out.println("5. Exit to previous menu. ");
+            
+            try {
+                int option = input.nextInt();
+                input.nextLine();
+                String choice;
+                switch(option){
+                    case 1:
+                        choice = "Standard single room";
+                        findRoomCategory(choice);
+                        bookRoom();
+                        break;
+                    case 2:
+                        choice = "Single deluxe room";
+                        findRoomCategory(choice);
+                        bookRoom();
+                        break;
+                    case 3:
+                        choice = "Double deluxe room";
+                        findRoomCategory(choice);
+                        bookRoom();
+                        break;
+                    case 4:
+                        choice = "Luxury room";
+                        findRoomCategory(choice);
+                        bookRoom();
+                        break;
+                    case 5:
+                        System.out.println("Exiting to previous menu.");
+                        exit = true;
+                        break;
+                    default:
+                        System.err.println("Wrong input. Enter one of the given options.");
+                }
+            } catch (Exception e) {
+                input.nextLine();
+                System.err.print("Wrong input. Try again:");
+            }
             
          } while (!exit);
     
     }
     
-    public static void findRoomCategory(String choice){
-        //Not allowed to use the static String variable choice in the switch set. Using a bridge variable
-        // and convert it to choice after switch.
-       // String choice = bridge;
+    public static void findRoomCategory(String choice){     //author C. Carboo 
         
+//      Filtering through ArrayList of Roomobjects,
+//      collecting them to a set and displaying the reuslt row by row.
         Set<Room> availableRoom =
          hotel.stream()
                .filter((r) -> (r.roomName.equals(choice)))
                 .filter((r) -> ((r.isRoomAvailable==true)))
-                //.forEach((r) -> System.out.println("RoomID of available room: "+r.roomID));
-                //   .count();
                  .collect(Collectors.toSet());
-      // System.out.println("\nTesting stream, nr. of available Rooms found in hotel: "+availableRoomIDs);
         System.out.println("\nFollowing "+choice+"s are available");
         for (Room r : availableRoom)               
-            System.out.println("RoomID: " + r.roomID);            
-       
+            System.out.println("RoomID: " + r.roomID);          
     }
     
-    public static void bookRoom(){
+    public static void bookRoom(){      // author C. Carboo
         
+//      Prompting user to choose if to continue to booking or not. If so, user gives roomID.
+//      Searching through the arrayList for matching room ID, setting equivalent room to not available.
         boolean exit=false;
         do {
-            System.out.print("\nEnter desired room ID: ");
-            String roomID = input.nextLine();
+            System.out.print("To continue to booking enter Y (yes). If not, enter N (no): ");
+            String choice = input.nextLine();
+            if (choice.equalsIgnoreCase("Y")){
+                System.out.print("\nEnter desired room ID: ");
+                String roomID = input.nextLine();
+                
+                for (Room room : hotel) {
+                    if (room.roomID.equalsIgnoreCase(roomID)) {
+                        room.setIsRoomAvailable(false);
+                        System.out.println("Room \""+roomID+"\" has now been booked:\n"+room);
+                        exit = true;
+                    }
+                }
+            }else
+                exit = true;
             
-            for (Room room : hotel) {
-                if (room.roomID.equalsIgnoreCase(roomID)) {
-                    room.setIsRoomAvailable(false);
-                    System.out.println("Room \""+roomID+"\" has now been booked:\n"+room);
-                    exit = true;
-                }
-//                else      //FUNKAR OÖNSKAT. Skrivs ut på varje rad som ej matchar ID.
-//                    System.err.println("Please choose a room ID from the given list.");
-                }
         } while (!exit);       
     }
 }

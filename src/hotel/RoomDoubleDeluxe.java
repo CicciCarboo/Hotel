@@ -1,4 +1,4 @@
-
+//      author C. Carboo
 package hotel;
 
 public class RoomDoubleDeluxe extends Room implements Deluxe{
