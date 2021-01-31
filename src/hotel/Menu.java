@@ -9,6 +9,7 @@ public class Menu {
     final static String newLine = "\n";
     private static boolean exit = false;
     private static Scanner input = new Scanner(System.in);
+    
    public void menu(){
         //Customer view(skapa en meny för att välja mellan olika alternativ):
         while (!exit) {
@@ -28,7 +29,7 @@ public class Menu {
                        // Room.displayRoom(); Vill vara static! Måste åkallas via ett objekt. Gör om metoden!
                         break;
                     case 2:
-                       // Room.roomAvailability(); Vill vara static! Måste åkallas via ett object. Gör om metoden!
+                       Room.roomAvailability();
                         break;
                     case 3:
                        

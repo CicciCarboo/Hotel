@@ -35,9 +35,4 @@ public class RoomLuxury extends Room implements Luxury{
         System.out.println("Aaah, how luxurious. Now you can entertain your guests in this lounge group, fit for a king!");
     }
 
-//    @Override
-//    public String toString() {
-//        return "RoomLuxuryDouble{" + "roomID=" + roomID + ", roomName=" + roomName + ", typeOfBed=" + typeOfBed + ", viewFromRoom=" + viewFromRoom + ", bathroomUitilities=" + bathroomUitilities + ", furniture=" + furniture + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay + '}';
-//    }
-    
 }

@@ -11,6 +11,8 @@ package hotel;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class Room {
@@ -18,7 +20,7 @@ public class Room {
     protected static Scanner input = new Scanner(System.in);
     
     
-    
+    public static List<Room> hotel = new LinkedList<Room>();
     protected String roomID;
     protected String roomName = "Standard single room";
     protected String typeOfBed = "Standard single bed";
@@ -137,69 +139,9 @@ public class Room {
         return "Room{" + "roomID=" + roomID + ", roomName=" + roomName + ", typeOfBed=" + typeOfBed + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay + '}';
     }
     
-    public void displayRoom(){  // these methods can only be called from the object since they are non static.
-        System.out.println(roomDescription);
-    }
-    
-    public void roomAvailability(){ // can only be called from the object due to non static. Not directly from a static context.
-        
-        if(isRoomAvailable==true){
-            
-            boolean exit = false;
-            do{
-                System.out.println("The " + roomName + " is available. The fee is "+ chargePerDay +" SEK per night. \nIf you wish to book this room enter: 1.\nIf you want to exit this menu enter: 2.");
-                
-                try {
-                    int choice = input.nextByte();
-                    if (choice == 1 || choice == 2){
-                        switch(choice){
-                            case 1:
-                                isRoomAvailable=false;
-                                input.nextLine();
-                                System.out.println("Please enter your customer ID.");
-                                //some code to register room to customer ID in booking class/database
-                                try {
-                                    int customerID = input.nextInt();
-                                    //Method to controll that customerID exists in database and register to booking table in database.
-                                    System.out.println("CustomerID has been registered.");
-                                } catch (Exception e) {
-                                    input.nextLine();
-                                }
-                                input.nextLine();
-                                //some code to get roomID and enter it in the following answer: CHECK!!! A generic method to the rescue!!!                                
-                                System.out.println("You have now booked the room ....TEMPORARY ID: "+ roomID +" !!! Ist to be autoincremented.... You will be charged "+ chargePerDay +" SEK per night.");
-                                exit = true;
-                                break;
-                            case 2:
-                                System.out.println("No booking has been performed. Exiting this menu.");
-                                exit = true;
-                                break;
-                            default:
-                                System.out.println("Returning to main menu.");
-                                exit = true;
-                                break;
-                        }
-                    }else
-                        System.out.println("Please select 1 or 2.");
-                    
-                } catch (Exception e) {
-                    input.nextLine();
-                    System.err.println("Please use only the digits 1 or 2 for your choice.");
-                }
-                
-            }while (!exit);
-            
-        }else
-            System.out.println("Sorry, the room is not available. Returning to main menu.");
-    }
-    
-    public static void nonGenericRoom(){
-       // System.out.println("In my NON generic room method i can call this room: " + roomName);
-    }
-
     public static void generateHotel(){
         
-        List<Room> hotel = new LinkedList<Room>();// Trying to autofill the rooms
+        // Trying to autofill the rooms
                    
             // try this later on: IntStream.range(0, 10).map(y -> 2 + y * 2).forEach(arraylist::add);
             
@@ -247,6 +189,98 @@ public class Room {
 //        int nrOfDoubleDeluxe = 5;
 //        int nrOfLuxury = 5;
 //            totalNrHotelRooms = nrOfStandardRooms+nrOfSingleDeluxe+nrOfDoubleDeluxe+nrOfLuxury;
+    }
+    
+    public void displayRoom(){  // these methods can only be called from the object since they are non static.
+        System.out.println(roomDescription);
+    }
+    
+  
+    public static void roomAvailability(){
+       
+        boolean exit = false;
+        do {            
             
+       
+        System.out.println("\n\n********************** BOOKING ROOM ***********************");
+        
+        System.out.println("\nSelect one of following options: ");
+        System.out.println("\n1. Standard single room, 1000 SEK/night. ");
+        System.out.println("2. Single deluxe room, 1500 SEK/night. ");
+        System.out.println("3. Double deluxe room, 2000 SEK/night. ");
+        System.out.println("4. Luxury room, 3000 SEK/night. ");
+        System.out.println("5. Exit to previous menu. ");
+        
+        int option = input.nextInt();
+        input.nextLine();
+        String choice;
+        switch(option){
+            case 1:
+                choice = "Standard single room";
+                findRoomCategory(choice);
+                bookRoom();
+                break;
+            case 2:
+                choice = "Single deluxe room";
+                findRoomCategory(choice);
+                bookRoom();
+                break;
+            case 3:
+                choice = "Double deluxe room";
+                findRoomCategory(choice);
+                bookRoom();
+                break;
+            case 4:
+                choice = "Luxury room";
+                findRoomCategory(choice);
+                bookRoom();
+                break;
+            default:
+                System.out.println("Exiting to previous menu.");
+                exit = true;
+                break;
+        }
+        
+            
+         } while (!exit);
+    
+    }
+    
+    public static void findRoomCategory(String choice){
+        //Not allowed to use the static String variable choice in the switch set. Using a bridge variable
+        // and convert it to choice after switch.
+       // String choice = bridge;
+        
+        Set<Room> availableRoom =
+         hotel.stream()
+               .filter((r) -> (r.roomName.equals(choice)))
+                .filter((r) -> ((r.isRoomAvailable==true)))
+                //.forEach((r) -> System.out.println("RoomID of available room: "+r.roomID));
+                //   .count();
+                 .collect(Collectors.toSet());
+      // System.out.println("\nTesting stream, nr. of available Rooms found in hotel: "+availableRoomIDs);
+        System.out.println("\nFollowing "+choice+"s are available");
+        for (Room r : availableRoom)               
+            System.out.println("RoomID: " + r.roomID);            
+       
+    }
+    
+    public static void bookRoom(){
+        
+        boolean exit=false;
+        do {
+            System.out.print("\nEnter desired room ID: ");
+            String roomID = input.nextLine();
+            
+            for (Room room : hotel) {
+                if (room.roomID.equalsIgnoreCase(roomID)) {
+                    room.setIsRoomAvailable(false);
+                    System.out.println("Room \""+roomID+"\" has now been booked:\n"+room);
+                    exit = true;
+                }
+//                else      //FUNKAR OÖNSKAT. Skrivs ut på varje rad som ej matchar ID.
+//                    System.err.println("Please choose a room ID from the given list.");
+                }
+        } while (!exit);       
     }
 }
