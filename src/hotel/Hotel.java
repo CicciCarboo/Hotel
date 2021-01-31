@@ -1,33 +1,45 @@
 
 package hotel;
 
+import java.util.Scanner;
+
 public class Hotel{
     
     
 public static void main(String[] args) {
-      
-                
-        
-       
-    Menu m = new Menu();
-        System.out.println("Menu class" + m);
-
-    Food f = new Food();
-        System.out.println("class food:" + f);
     
-    Noodles n = new Noodles();
-        System.out.println("class noodles:" + n);
-        
-    PastaRs pr = new PastaRs();
-        System.out.println("class PastaRs:" + pr);
-        
-    Sandwich s = new Sandwich();
-        System.out.println("class Sandwich:" + s);
-        
-    Drink d = new Drink();
-        System.out.println("class Drink:" + d);
-        
+    
+startMenu();
+          
 }
+
+    public static void startMenu() {
+        while (true) {
+                System.out.println("Make your choice!");
+                System.out.println("1.Customers menu");
+                System.out.println("2.Reception");              
+                System.out.println("3.Exit");
+
+            // Ta in text från användaren
+            Scanner scan = new Scanner(System.in);
+            String userInput = scan.nextLine().toLowerCase();
+            
+            // Hantera input val
+            if (userInput.equals("1") || userInput.contains("menu")) {
+                System.out.println("Customers menu selected\n");
+            } else if (userInput.equals("2") || userInput.contains("Reception")) {
+                System.out.println("Reception selected\n");
+            } else if (userInput.equals("3") || userInput.contains("exit") || userInput.contains("quit")) {
+                System.out.println("Thank you for you choosing us");
+                break;
+            } else { // Om ingen match hittas, visa felmeddelande
+                System.out.println("Unknown input. Try again!\n");
+            }
+        }
+
+    }
+
+
 
 
 }

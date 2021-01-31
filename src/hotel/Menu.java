@@ -19,7 +19,7 @@ public class Menu {
                 System.out.println("3. Book");
                 System.out.println("4. Order food");
                 System.out.println("5. Checkout");
-                System.out.println("7. Exit1");
+                System.out.println("7. Back to start menu");
 
                 int selection = input.nextInt();
 
