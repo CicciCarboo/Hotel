@@ -1,7 +1,9 @@
 
 package hotel;
 
+import static hotel.Room.input;
 import java.util.*;
+
 
 public class Menu {
     final static String boldTextStart = "\033[1m";
@@ -9,42 +11,49 @@ public class Menu {
     final static String newLine = "\n";
     private static boolean exit = false;
     private static Scanner input = new Scanner(System.in);
-   public void menu(){
-        //Customer view(skapa en meny för att välja mellan olika alternativ):
-        while (!exit) {
+   
+   
+   public static void customersMenu(){
+        
 
-                System.out.println("Make your choice!");
+        while (true) {
+           System.out.println("Make your choice!");
                 System.out.println("1. Display room details");
                 System.out.println("2. Display room availability");
-                System.out.println("3. Book"); // kan göras från val 2
-                System.out.println("4. Order food");
-                System.out.println("5. Checkout");
-                System.out.println("7. Back to start menu");
+                System.out.println("3. Order food");
+                System.out.println("4. Checkout");
+                System.out.println("5. Back to start menu");
+            
 
-                int selection = input.nextInt();
+            // Ta in text från användaren
+            Scanner scan = new Scanner(System.in);
+            String userInput = scan.nextLine().toLowerCase(); // Omvandla input till lower case för jämförelse
 
-                switch (selection) {
-                    case 1:
-                       // Room.displayRoom(); Vill vara static! Måste åkallas via ett objekt. Gör om metoden!
-                        break;
-                    case 2:
-                       // Room.roomAvailability(); Vill vara static! Måste åkallas via ett object. Gör om metoden!
-                        break;
-                    case 3:
-                       
-                        break;
-                    case 4:
-                       
-                        break;
-                    case 5:
-                        
-                        break;
-                    case 6:
-                        
-                        break;
-                    default:
-                        exit = true;
-                }
+            if (userInput.equals("1") || userInput.contains("details")) {
+                System.out.println(newLine + "Room details selected");
+                Room.generateHotel();
+
+            } else if (userInput.equals("2") || userInput.contains("Availability")) {
+                
+                System.out.println(boldTextStart + "Room availability selected" + regularTextStart);
+
+
+            } else if (userInput.equals("3") || userInput.contains("Food")) {               
+                Food.foodMenu();
+
+            } else if (userInput.equals("4") || userInput.contains("Checkout")) {
+
+                
+                System.out.println(boldTextStart + "Search for your booking room" + regularTextStart);
+
+
+            } else if (userInput.equals("5") || userInput.contains("exit") || userInput.contains("quit")) {
+                break; // Gå tillbaka till start menu
+            } else {
+                System.out.println("Unknown input. Try again!" + newLine);
             }
-   }
+        }
+
+    }
+   
 }
