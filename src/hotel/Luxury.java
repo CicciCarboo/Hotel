@@ -5,7 +5,7 @@ package hotel;
 public interface Luxury {
        
     public void enoyView();    
-    public void startJacuzzi();
+    public void startSauna();
     public void enjoyLoungeGroup();
     
 }

@@ -2,11 +2,24 @@
 package hotel;
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Hotel{
     
     
 public static void main(String[] args) {
+      
+                      
+       Room.generateHotel();
+       
+       
+    Menu m = new Menu();
+        System.out.println("Menu class" + m);
+
+    Food f = new Food();
+        System.out.println("class food:" + f);
     
     
 startMenu();

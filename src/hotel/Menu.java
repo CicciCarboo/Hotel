@@ -16,7 +16,7 @@ public class Menu {
                 System.out.println("Make your choice!");
                 System.out.println("1. Display room details");
                 System.out.println("2. Display room availability");
-                System.out.println("3. Book");
+                System.out.println("3. Book"); // kan göras från val 2
                 System.out.println("4. Order food");
                 System.out.println("5. Checkout");
                 System.out.println("7. Back to start menu");
@@ -25,10 +25,10 @@ public class Menu {
 
                 switch (selection) {
                     case 1:
-                        
+                       // Room.displayRoom(); Vill vara static! Måste åkallas via ett objekt. Gör om metoden!
                         break;
                     case 2:
-                        
+                       // Room.roomAvailability(); Vill vara static! Måste åkallas via ett object. Gör om metoden!
                         break;
                     case 3:
                        
