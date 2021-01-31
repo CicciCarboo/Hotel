@@ -3,34 +3,30 @@ package hotel;
 
 public class Drink extends Food{
     
-    private final String name = "Drink";
-    private final int price = 30;
+    private String name;
+    private int price;
     
     
     Drink() {
-        this.setName("Drink");
-        this.setPrice(30);
-    }
+        super.setName("Drink");     
+        super.setPrice(30);          
+    }                               // "Drink(){}" är en parameterfri construktor. Om 
+                                    // man vill använda keyword "this." kan man använda en construktor med parametrar.
+                                    // Parametrarna i en construktor med parametrar har ofta samma namn på parametrarna 
+                                    // som klassens instansvariabler.
+                                    // Keyword "this." talar om för kompilatorn att det är instansvariabeln som ska få
+                                    // konstruktorns parameter som värde. Annars blir kontruktorn förvirrad när de 
+                                    // heter samma sak.    
+//      Originalmetoden från Foodklassen
+//     public void setPrice(int price) {
+//        this.price = price;
+//    }
 
-    @Override
-    public void setPrice(int price) {
-        super.setPrice(price); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getPrice() {
-        return super.getPrice(); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setName(String name) {
-        super.setName(name); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public String getName() {
-        return super.getName(); //To change body of generated methods, choose Tools | Templates.
+    Drink (String name, int price) {
+        
+        this.name = name;
+        this.price = price;       
     }
     
-    
+       
 }
