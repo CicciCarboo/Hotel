@@ -39,6 +39,9 @@ public static void foodMenu(){
     Sandwich s = new Sandwich();
     Drink d = new Drink();
     
+    Room.genericDisplayMethod(n,pr, s, d);
+    System.out.println();
+    
     LinkedHashSet<Food> hs = new LinkedHashSet();
     
     hs.add(n);
@@ -46,8 +49,8 @@ public static void foodMenu(){
     hs.add(s);
     hs.add(d);
     
-    for (Food f : hs)            
-        System.out.println(f); 
+//    for (Food f : hs)            
+//        System.out.println(f); 
     
 //    n.discount();
         System.out.println("Select your order:");

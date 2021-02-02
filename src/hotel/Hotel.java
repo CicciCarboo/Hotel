@@ -10,20 +10,18 @@ public class Hotel{
     
     
 public static void main(String[] args) {
-      
-                      
-       Room.generateHotel();
+        
        
-       
-//    Menu m = new Menu();
-//        System.out.println("Menu class" + m);
-//
-//    Food f = new Food();
-//        System.out.println("class food:" + f);
+    Menu m = new Menu();
+        System.out.println("Menu class" + m);
+
+    Food f = new Food();
+        System.out.println("class food:" + f);
     
     
-//startMenu();
-          Room.roomAvailability();
+    
+            startMenu();
+          
 }
 
     public static void startMenu() {

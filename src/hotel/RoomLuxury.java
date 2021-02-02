@@ -7,14 +7,14 @@ public class RoomLuxury extends Room implements Luxury{
     public RoomLuxury() {
         super.setRoomID("");
         super.setAirCondition(true);
-        super.setBathroomUitilities("Toilet, zink, towel warmer, jacuzzi, sauna");
+        super.setBathroomUitilities(" Toilet, zink, towel warmer, jacuzzi, sauna");
         super.setChargePerDay(3000);
-        super.setFurniture("Air condition. Television. Tea kettle. Iron with iron board. Desk and restchair. Lounge group");
+        super.setFurniture(" Air condition. Television. Tea kettle. Iron with iron board. Desk and restchair. Lounge group");
         super.setRoomName("Luxury room");
-        super.setTypeOfBed("King size bed");
-        super.setViewFromRoom("Sea view");
-        super.setRoomDescription(" " + roomName + ". The room comes with a safe for your passport,"
-            + " money etc. " + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+".");
+        super.setTypeOfBed(" King size bed");
+        super.setViewFromRoom(" Sea view");
+        super.setRoomDescription(" " + roomName + ". Safe-deposit box,"
+             + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+".");
     }
 
     public RoomLuxury(String roomID, String roomName, String typeOfBed, boolean airCondition, boolean freeBreakfast, boolean isRoomAvailable, int chargePerDay) {

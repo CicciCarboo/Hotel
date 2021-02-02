@@ -6,14 +6,14 @@ public class RoomDoubleDeluxe extends Room implements Deluxe{
     public RoomDoubleDeluxe() {
         super.setRoomID("");
         super.setAirCondition(true);
-        super.setBathroomUitilities("Toilet, zink, bathtub");
+        super.setBathroomUitilities(" Toilet, zink, bathtub");
         super.setChargePerDay(2000);
-        super.setFurniture("Air condition. Television. Tea kettle. Iron with iron board. Desk and restchair. Sofabed");
+        super.setFurniture(" Air condition. Television. Tea kettle. Iron with iron board. Desk and restchair. Sofabed");
         super.setRoomName("Double deluxe room");
-        super.setTypeOfBed("Two queen sized beds");
-        super.setViewFromRoom("Sea view");
-        super.setRoomDescription(" " + roomName + ". The room comes with a safe for your passport,"
-            + " money etc. " + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+".");
+        super.setTypeOfBed(" Two queen sized beds");
+        super.setViewFromRoom(" Sea view");
+        super.setRoomDescription(" " + roomName + ". Safe-deposit box,"
+             + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+".");
     }
 
     public RoomDoubleDeluxe(String roomID, String roomName, String typeOfBed, boolean airCondition, boolean freeBreakfast, boolean isRoomAvailable, int chargePerDay) {
