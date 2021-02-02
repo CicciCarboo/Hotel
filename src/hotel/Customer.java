@@ -6,19 +6,17 @@ public class Customer {
     private int custId;
     private String firstName;
     private String lastName;
-    private int telNr;
     private String email;
     
     public Customer() {
     }
     
     
-    public Customer(int custId, String firstName, String lastName, int telNr, String email){
+    public Customer(String firstName, int custId, String lastName){
         
         this.custId = custId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.telNr = telNr;
         this.email = email;    
     }
 
@@ -46,14 +44,6 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public int getTelNr() {
-        return telNr;
-    }
-
-    public void setTelNr(int telNr) {
-        this.telNr = telNr;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -64,8 +54,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer{" + "custId=" + custId + ", firstName=" + firstName + ", lastName=" + lastName + ", telNr=" + telNr + ", email=" + email + '}';
+        return "Customer{" + "custId=" + custId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + '}';
     }
-    
     
 }
