@@ -62,7 +62,7 @@ public class Customer {
     }
     
     static void CustomersInput() throws SQLException{
-        System.out.println("Create new customer!");
+        System.out.println("Create new customer! Press enter");
         input.nextLine();
         System.out.print("Write your FirstName: ");
         String firstName = input.nextLine();
