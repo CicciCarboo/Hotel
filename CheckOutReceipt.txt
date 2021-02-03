@@ -1,3 +1,2 @@
 
-Standard single room. Safe-deposit box.  Standard single bed.  Pateo view.  Toilet, zink, shower.  Television. Tea kettle. Iron with iron board. Desk and restchair.
- Single deluxe room. Safe-deposit box, Queen size bed.  Sea view.  Toilet, zink, bathtub.  Air condition. Television. Tea kettle. Iron with iron board. Desk and restchair. Sofabed.
+Booking 0, customerID=1, roomID=r1, bookStart=2021-02-03, bookEnd=2021-02-06, sumNights=3, chargePerNight=1000, sumChargePerDays=3000, mealsOrdered=[], bookedNights=[], sumCostMeals=0}

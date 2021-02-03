@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.ObjectOutputStream;
 import java.time.LocalDate;
+import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -27,15 +28,16 @@ public class CheckOut {
     protected String roomID;
     protected LocalDate bookStart;
     protected LocalDate bookEnd;
-    protected int sumNights; // Subtract bookStart from bookEnd
-    protected int chargePerNight;
-    protected int sumChargePerNight; // chargePerNight times sumNights
+    protected int sumDays; // Subtract bookStart from bookEnd
+    protected int chargePerDay;
+    protected int sumChargePerDays; // chargePerNight times sumNights
      ArrayList<Food> mealsOrdered = new ArrayList<>(); // List(arrayList?) with all orderd Food objects, put as stream, count their prices and amount of orders.
-     ArrayList<CheckOut> bookedNights = new ArrayList<>(); // List(arrayList?) with all orderd Booking object, put as stream, count their prices.
-    protected int sumCostMeals;// -||-
+     ArrayList<CheckOut> bookedDays = new ArrayList<>(); // List(arrayList?) with all orderd Booking object, put as stream, count their prices.
+    protected int sumCostMeals = 0;
 
-    public CheckOut(int customerID) {
+    public CheckOut(int customerID, String roomID) {
         this.customerID = customerID;
+        this.roomID = roomID;
         
     }
 
@@ -45,9 +47,9 @@ public class CheckOut {
         this.roomID = roomID;
         this.bookStart = bookStart;
         this.bookEnd = bookEnd;
-        this.sumNights = sumNights;
-        this.chargePerNight = chargePerNight;
-        this.sumChargePerNight = sumChargePerNight;
+        this.sumDays = sumNights;
+        this.chargePerDay = chargePerNight;
+        this.sumChargePerDays = sumChargePerNight;
         this.sumCostMeals = sumCostMeals;
     }
 
@@ -83,70 +85,84 @@ public class CheckOut {
         return bookStart;
     }
 
-    public void setBookStart(LocalDate bookStart) {
+    public void setBookStart() {
+        System.out.println("When do you want to begin your stay?");
+        System.out.print("Year by format YYYY: ");
+        int year = input.nextInt();
+        input.nextLine();
+        System.out.print("Month in digits MM: ");
+        int month = input.nextInt();
+        input.nextLine();
+        System.out.print("Day in digits DD: ");
+        int day = input.nextInt();        
+        input.nextLine();
         
-        this.bookStart = bookStart;
+        bookStart = LocalDate.of(year, month, day);
+        
     }
 
     public LocalDate getBookEnd() {
         return bookEnd;
     }
 
-    public void setBookEnd(LocalDate bookEnd) {
-        this.bookEnd = bookEnd;
+    public void setBookEnd() {
+        System.out.println("When do you want to check out?");
+        System.out.print("Year by format YYYY: ");
+        int year = input.nextInt();
+        input.nextLine();
+        System.out.print("Month in digits MM: ");
+        int month = input.nextInt();
+        input.nextLine();
+        System.out.print("Day in digits DD: ");
+        int day = input.nextInt();        
+        input.nextLine();
+        
+        bookEnd = LocalDate.of(year, month, day);
     }
 
-    public int getChargePerNight() {
-        return chargePerNight;
+    public int getSumDays() {
+        return sumDays;
     }
 
-    public void setChargePerNight(int chargePerNight) {
-        this.chargePerNight = chargePerNight;
+    public void setSumDays(LocalDate bookStart, LocalDate bookEnd) {
+        
+        sumDays = (int) DAYS.between(bookStart, bookEnd);
+    }
+    
+    public int getChargePerDay() {
+        return chargePerDay;
     }
 
+    public void setChargePerDay(int chargePerDay) {
+        this.chargePerDay = chargePerDay;
+    }
+
+    public int getSumChargePerDays() {
+        return sumChargePerDays;
+    }
+
+    public void setSumChargePerDays(int sumChargePerDay, int sumDays) {
+        sumChargePerDays = (sumChargePerDay*sumDays);
+    }
+
+    
     public int getSumCostMeals() {
         return sumCostMeals;
     }
 
     public void setSumCostMeals(int sumCostMeals) {
-        this.sumCostMeals = sumCostMeals;
+        this.sumCostMeals += sumCostMeals;
     }
-    
-    
-    
-     Room r = new Room();
-                Room sd = new RoomSingleDeluxe();
-                RoomDoubleDeluxe d = new RoomDoubleDeluxe();
-                RoomLuxury l = new RoomLuxury();
-    
-                
-    public void bookingRoom(String roomID, int chargePerNight){
-        
-        System.out.println("Enter customer ID: ");
-        int customerID = input.nextInt();
-        input.nextLine();
-        
-        CheckOut b = new CheckOut(customerID);
-        
-        b.setRoomID(roomID);
-        b.setChargePerNight(chargePerNight);
-        b.setBookStart(2021-02-10);
-        b.setBookEnd(20210210);
-        bookedNights.add(b);
-        
-        
-    }            
-                
-                
-                
-                
-                
-    public static <E> void printReceipt(E a, E b){ //Not possible to print specific values from entire objects.
+
+    @Override
+    public String toString() {
+        return "Booking " + bookingID + ", customerID=" + customerID + ", roomID=" + roomID + ", bookStart=" + bookStart + ", bookEnd=" + bookEnd + ", sumNights=" + sumDays + ", chargePerNight=" + chargePerDay + ", sumChargePerDays=" + sumChargePerDays + ", mealsOrdered=" + mealsOrdered + ", bookedNights=" + bookedDays + ", sumCostMeals=" + sumCostMeals + '}';
+    }        
+                          
+    public void printReceipt(){ //Not possible to print specific values from entire objects.
                                                     // better to stream object into, return a result and place it into the buffered writer!
-        Room r = new Room();
-                Room sd = new RoomSingleDeluxe();
-                RoomDoubleDeluxe d = new RoomDoubleDeluxe();
-                RoomLuxury l = new RoomLuxury();
+       
+               
         /* get data from checkout
          for example 
             protected int sumNightsSpent= ...
@@ -169,7 +185,7 @@ public class CheckOut {
               FileWriter fw = new FileWriter("CheckOutReceipt.txt");
               BufferedWriter buffer = new BufferedWriter(fw);
               
-              buffer.write("\n"+a.toString()+"\n"+b.toString());
+              buffer.write("\n"+ toString());
               buffer.newLine();
               System.out.println("Printing out receipt successfully.");
               buffer.close();

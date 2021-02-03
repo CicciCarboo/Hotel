@@ -13,7 +13,7 @@ public class Menu {
     private static Scanner input = new Scanner(System.in);
    
    
-   public static void customersMenu(){
+   public static void BookingsMenu(){
         
 
         while (true) {
@@ -21,8 +21,7 @@ public class Menu {
                 System.out.println("1. Display room details");
                 System.out.println("2. Display room availability");
                 System.out.println("3. Order food");
-                System.out.println("4. Checkout");
-                System.out.println("5. Back to start menu");
+                System.out.println("4. Back to start menu");
             
 
             // Ta in text från användaren
@@ -41,18 +40,12 @@ public class Menu {
             } else if (userInput.equals("2") || userInput.contains("Availability")) {
                 
                 System.out.println(boldTextStart + "Room availability selected" + regularTextStart);
-                Room.roomAvailability();    
+                Room.roomAvailability();
 
             } else if (userInput.equals("3") || userInput.contains("Food")) {               
                 Food.foodMenu();
 
-            } else if (userInput.equals("4") || userInput.contains("Checkout")) {
-
-                
-                System.out.println(boldTextStart + "Search for your booking room" + regularTextStart);
-
-
-            } else if (userInput.equals("5") || userInput.contains("exit") || userInput.contains("quit")) {
+            } else if (userInput.equals("4") || userInput.contains("exit") || userInput.contains("quit")) {
                 break; // Gå tillbaka till start menu
             } else {
                 System.out.println("Unknown input. Try again!" + newLine);

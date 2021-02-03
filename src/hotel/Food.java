@@ -2,12 +2,8 @@
 package hotel;
 
 import static hotel.Room.input;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+
 
 public class Food {
     protected String name = "food";
