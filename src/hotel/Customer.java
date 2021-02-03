@@ -1,13 +1,17 @@
 
 package hotel;
 
+import static hotel.Room.input;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Customer {
     
     private int custId;
     private String firstName;
     private String lastName;
     private String email;
-    
+    private static Statement sqlStatement = null;
     public Customer() {
     }
     
@@ -57,4 +61,17 @@ public class Customer {
         return "Customer{" + "custId=" + custId + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + '}';
     }
     
+    static void CustomersInput() throws SQLException{
+        System.out.println("Create new customer!");
+        input.nextLine();
+        System.out.print("Write your FirstName: ");
+        String firstName = input.nextLine();
+        System.out.print("Write your LastName: ");
+        String lastName= input.nextLine();
+        System.out.print("Write your email address: ");
+        String email = input.nextLine();
+       
+        System.out.println("INSERT INTO book(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");     
+        sqlStatement.executeUpdate("INSERT INTO book(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");
+    }
 }

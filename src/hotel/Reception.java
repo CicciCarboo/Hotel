@@ -1,6 +1,9 @@
 
 package hotel;
 
+import static hotel.Room.input;
+import java.sql.SQLException;
+
 public class Reception {
 
     private int Reception_id;
@@ -45,6 +48,14 @@ public class Reception {
         return "Reception{" + "Reception_id=" + Reception_id + ", firstName=" + firstName + ", lastName=" + lastName + '}';
     }
     
+    static void ReceptionInput() throws SQLException{
+        System.out.println("Write your receptions id number!");
+        input.nextLine();
+        
+        System.out.println("");
+       
+       
+    }
     
     
 }

@@ -2,6 +2,7 @@
 package hotel;
 
 import static hotel.Room.input;
+import java.sql.SQLException;
 import java.util.*;
 
 
@@ -40,6 +41,7 @@ public class Menu {
             } else if (userInput.equals("2") || userInput.contains("Availability")) {
                 
                 System.out.println(boldTextStart + "Room availability selected" + regularTextStart);
+                
                 Room.roomAvailability();
 
             } else if (userInput.equals("3") || userInput.contains("Food")) {               
@@ -53,5 +55,33 @@ public class Menu {
         }
 
     }
+   
+//   private static void Choice() throws SQLException{
+//        
+//        input.nextLine();
+//        System.out.println("Choice");
+//        System.out.println("1- Customer! ");
+//        System.out.println("2-Reception!");
+//         int val = Integer.parseInt(input.nextLine());
+//         
+//         
+//         if(val == 1){
+//             Customer.CustomersInput();
+//         }else if (val == 2){
+//             Reception.ReceptionInput();
+// 
+//         } else 
+//             System.out.println("Wrong input: Try again");
+               
+    
+   
+   
+   static void BookingsMenu2()throws SQLException{
+           
+                System.out.println("Make your choice!");
+                System.out.println("1.Room booking");
+                System.out.println("2.Checkout");              
+                System.out.println("3.Back to menu");
+   }
    
 }
