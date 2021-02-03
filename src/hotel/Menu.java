@@ -31,6 +31,11 @@ public class Menu {
             if (userInput.equals("1") || userInput.contains("details")) {
                 System.out.println(newLine + "Room details selected");
                 Room.generateHotel();
+                Room r = new Room();
+                Room sd = new RoomSingleDeluxe();
+                RoomDoubleDeluxe d = new RoomDoubleDeluxe();
+                RoomLuxury l = new RoomLuxury();
+                Room.genericDisplayMethod(r, sd, d, l);
 
             } else if (userInput.equals("2") || userInput.contains("Availability")) {
                 

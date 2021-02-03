@@ -1,5 +1,7 @@
 
 /* QUESTIONS
+
+    For fun: Add to roomAvailability() : efter booking, run interface methods for the specific room.
 */
 
 //          author C. Carboo
@@ -20,11 +22,11 @@ public class Room {
     public static List<Room> hotel = new LinkedList<Room>();
     protected String roomID;
     protected String roomName = "Standard single room";
-    protected String typeOfBed = "Standard single bed";
-    protected String viewFromRoom = "Pateo view";
-    protected String bathroomUitilities = "Toilet, zink, shower";
-    protected String furniture = "Television. Tea kettle. Iron with iron board. Desk and restchair";
-    protected String roomDescription = "Room description: " + roomName + ". Television. Safe-deposit box. " + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+"." ;
+    protected String typeOfBed = " Standard single bed";
+    protected String viewFromRoom = " Pateo view";
+    protected String bathroomUitilities = " Toilet, zink, shower";
+    protected String furniture = " Television. Tea kettle. Iron with iron board. Desk and restchair";
+    protected String roomDescription = "" + roomName + ". Safe-deposit box. " + typeOfBed +". "+ viewFromRoom +". " + bathroomUitilities +". "+ furniture+"." ;
     protected boolean airCondition = false;
     protected boolean freeBreakfast = true;
     protected boolean isRoomAvailable = true;
@@ -133,7 +135,7 @@ public class Room {
     
      @Override
     public String toString() {
-        return "Room{" + "roomID=" + roomID + ", roomName=" + roomName + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay+ ", typeOfBed=" + typeOfBed + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + '}';
+        return "" + roomDescription;
     }
     
     public static void generateHotel(){         // author C. Carboo
@@ -172,8 +174,41 @@ public class Room {
 //            
     }
     
-    public static void displayRoom(){ // make Generic???
-        System.out.println();
+    public static <E> void genericDisplayMethod(E e1,E e2,E e3,E e4){ // make Generic???
+        
+        boolean exit= false;
+        while (!exit) {            
+            
+        
+        System.out.println("********************* DISPLAY DETAILS *********************");
+        
+        System.out.println("\nElite Hotel offers following options: \n");
+        System.out.println("" + e1);
+        System.out.println("" + e2);
+        System.out.println("" + e3);
+        System.out.println("" + e4);
+        System.out.println("\n1. Previous menu to place an order or exit. ");
+        
+        try {
+            int choice = input.nextInt();
+            input.nextLine();
+            switch(choice){
+                case 1:
+                    System.out.println("\nExiting to previous menu.");
+                    exit = true;
+                    break;
+                default:
+                    System.err.println("Wrong input. Try again:");
+                    break;
+                    
+            }
+        } catch (Exception e) {
+            input.nextLine();
+            System.err.println("Wrong input. Try again:");
+        }
+        
+        }
+        
     }
     
   
@@ -237,11 +272,11 @@ public class Room {
         
 //      Filtering through ArrayList of Roomobjects,
 //      collecting them to a set and displaying the reuslt row by row.
-        Set<Room> availableRoom =
+        List<Room> availableRoom =
          hotel.stream()
                .filter((r) -> (r.roomName.equals(choice)))
                 .filter((r) -> ((r.isRoomAvailable==true)))
-                 .collect(Collectors.toSet());
+                 .collect(Collectors.toList());
         System.out.println("\nFollowing "+choice+"s are available");
         for (Room r : availableRoom)               
             System.out.println("RoomID: " + r.roomID);          
@@ -262,7 +297,7 @@ public class Room {
                 for (Room room : hotel) {
                     if (room.roomID.equalsIgnoreCase(roomID)) {
                         room.setIsRoomAvailable(false);
-                        System.out.println("Room \""+roomID+"\" has now been booked:\n"+room);
+                        System.out.println("Room \""+roomID+"\" has now been booked, is room available for others to book? Result: \n"+room.isRoomAvailable);
                         exit = true;
                     }
                 }
