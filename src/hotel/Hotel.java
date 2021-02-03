@@ -1,32 +1,31 @@
 
 package hotel;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+
 
 public class Hotel{
     
+    private static final String url = "jdbc:mysql://localhost:3306/Hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String user = "root";
+    private static final String password = "test";
+    private static Connection connection = null;
+    private static Statement sqlStatement = null;
     
-public static void main(String[] args) {
-   
-                      
-//       Room.generateHotel();
-       
-       
-//    Menu m = new Menu();
-//        System.out.println("Menu class" + m);
-//
-//    Food f = new Food();
-//        System.out.println("class food:" + f);
+public static void main(String[] args) throws SQLException {
     
-    
-startMenu();
-          
-}
+    try (Connection connection = DriverManager.getConnection(url, user, password)) {
 
-    public static void startMenu() {
+            System.out.println("Connection Succeeded!");
+
+            sqlStatement = connection.createStatement();          
+
+
+    
         while (true) {
                 System.out.println("Welcome to Elite Hotel !");
                 System.out.println("Make your choice!");
@@ -53,11 +52,13 @@ startMenu();
             }
         }
 
-    }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally {
+            connection.close();
+        }  
     
+}  
     
-
-
-
-
 }
