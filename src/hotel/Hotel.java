@@ -12,15 +12,11 @@ public class Hotel{
 public static void main(String[] args) {
         
        
-    Menu m = new Menu();
-        System.out.println("Menu class" + m);
 
-    Food f = new Food();
-        System.out.println("class food:" + f);
-    
-    
-    
-            startMenu();
+//                Room r = new Room();
+//                Room sd = new RoomSingleDeluxe();
+//
+//     Booking.printReceipt(r,sd);
           
 }
 

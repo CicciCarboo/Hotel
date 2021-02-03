@@ -7,6 +7,7 @@
 //          author C. Carboo
 package hotel;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-public class Room {
+public class Room implements Serializable{
     // Superclass/parentclass to all Room classes
     protected static Scanner input = new Scanner(System.in);
     
