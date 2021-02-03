@@ -14,7 +14,7 @@ public class Menu {
     private static Scanner input = new Scanner(System.in);
    
    
-   public static void BookingsMenu(){
+   public static void BookingsMenu() throws SQLException{
         
 
         while (true) {
@@ -41,7 +41,7 @@ public class Menu {
             } else if (userInput.equals("2") || userInput.contains("Availability")) {
                 
                 System.out.println(boldTextStart + "Room availability selected" + regularTextStart);
-                
+                Customer.CustomersInput();
                 Room.roomAvailability();
 
             } else if (userInput.equals("3") || userInput.contains("Food")) {               

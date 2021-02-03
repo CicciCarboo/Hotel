@@ -46,7 +46,8 @@ public static void main(String[] args) throws SQLException {
                 System.out.println("Customer menu selected:");               
                 Menu.BookingsMenu();
             } else if (userInput.equals("2") || userInput.contains("Receptions menu")){
-                System.out.println("Customers menu selected\n");
+                System.out.println("Receptions menu selected\n");
+                Reception.ReceptionInput();
                 Menu.BookingsMenu();
             } else if (userInput.equals("3") || userInput.contains("exit") || userInput.contains("quit")) {
                 System.out.println("Thank you for you choosing Elite Hotel");
