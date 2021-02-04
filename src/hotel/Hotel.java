@@ -14,11 +14,9 @@ public class Hotel{
     
     private static final String url = "jdbc:mysql://localhost:3306/Hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String user = "root";
-    private static final String password = "56ultra78Violett9";
-    protected static Connection connection = null;
-    protected static Statement sqlStatement = null;
-    protected static PreparedStatement prepSt;
-    protected static ResultSet rs;
+    private static final String password = "test";
+    private static Connection connection = null;
+    private static Statement sqlStatement = null;
     
     public static void main(String[] args) throws SQLException {
     
