@@ -71,7 +71,12 @@ public class Customer {
         System.out.print("Write your email address: ");
         String email = input.nextLine();
        
-        System.out.println("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");     
+        try {
+             System.out.println("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");     
         sqlStatement.executeUpdate("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");
-    }
+  
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+         }
 }

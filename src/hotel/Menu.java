@@ -28,10 +28,10 @@ public class Menu {
             // Ta in text från användaren
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine().toLowerCase(); // Omvandla input till lower case för jämförelse
-
+            Room.generateHotel();
             if (userInput.equals("1") || userInput.contains("details")) {
                 System.out.println(newLine + "Room details selected");
-                Room.generateHotel();
+                
                 Room r = new Room();
                 Room sd = new RoomSingleDeluxe();
                 RoomDoubleDeluxe d = new RoomDoubleDeluxe();

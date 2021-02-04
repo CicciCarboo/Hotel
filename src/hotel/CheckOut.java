@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.ObjectOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import java.util.Scanner;
  * @author Cicci Carboo
  */
 public class CheckOut {
-    Scanner input = new Scanner(System.in);
+    static Scanner input = new Scanner(System.in);
     
     protected int bookingID;
     protected int customerID;
@@ -155,29 +158,23 @@ public class CheckOut {
         return "Booking " + bookingID + ", customerID=" + customerID + ", roomID=" + roomID + ", bookStart=" + bookStart + ", bookEnd=" + bookEnd + ", sumNights=" + sumDays + ", chargePerNight=" + chargePerDay + ", sumChargePerDays=" + sumChargePerDays + ", mealsOrdered=" + mealsOrdered + ", bookedNights=" + bookedDays + ", sumCostMeals=" + sumCostMeals + '}';
     }        
                           
+    public static void customerCheckOut() throws SQLException{
+        Statement sqlStatement = null;
+        System.out.print("\nEnter booking ID: ");
+        int RoomsCheckout_id = input.nextInt();
+        input.nextLine();
+        ResultSet rs = sqlStatement.executeQuery("SELECT * FROM booking WHERE bookingID " + RoomsCheckout_id);
+        System.out.println("\nQuery:'SELECT * FROM booking'\n");
+        
+        while (rs.next()) {
+            System.out.println("Result from booking query:" + rs);
+        }
+    }
+    
     public void printReceipt(){ //Not possible to print specific values from entire objects.
                                                     // better to stream object into, return a result and place it into the buffered writer!
-       
-               
-        /* get data from checkout
-         for example 
-            protected int sumNightsSpent= ...
-            protected int total room cost = object.getPrice multiplied by nights booked.
-        */
         
         try {
-            
-            // creating a text file to write the objects too.
-//            FileOutputStream f = new FileOutputStream(new File("CheckOutReceipt.txt"));
-//            ObjectOutputStream o = new ObjectOutputStream(f);
-//            
-//            //Write objects to file
-//            o.writeObject(r);
-//            o.writeObject(sd);
-//            
-//            o.close();
-//            f.close();
-
               FileWriter fw = new FileWriter("CheckOutReceipt.txt");
               BufferedWriter buffer = new BufferedWriter(fw);
               
