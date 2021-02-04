@@ -1,0 +1,2 @@
+
+Booking 0, customerID=1, roomID=r1, bookStart=2021-02-03, bookEnd=2021-02-06, sumNights=3, chargePerNight=1000, sumChargePerDays=3000, mealsOrdered=[], bookedNights=[], sumCostMeals=0}

@@ -73,5 +73,8 @@ public class Customer {
        
         System.out.println("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");     
         sqlStatement.executeUpdate("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");
+  
+    
     }
+    
 }

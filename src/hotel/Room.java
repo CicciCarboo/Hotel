@@ -7,6 +7,8 @@
 //          author C. Carboo
 package hotel;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 
-public class Room {
+public class Room implements Serializable{
     // Superclass/parentclass to all Room classes
     protected static Scanner input = new Scanner(System.in);
     
@@ -288,19 +290,32 @@ public class Room {
 //      Searching through the arrayList for matching room ID, setting equivalent room to not available.
         boolean exit=false;
         do {
-            System.out.print("To continue to booking enter Y (yes). If not, enter N (no): ");
+            System.out.print("\nTo continue to booking enter Y (yes). \nIf not, enter N (no): ");
             String choice = input.nextLine();
-            if (choice.equalsIgnoreCase("Y")){
+            if (choice.equalsIgnoreCase("Y")){                
                 System.out.print("\nEnter desired room ID: ");
                 String roomID = input.nextLine();
+                System.out.print("\nEnter customer ID: ");
+                int customerID = input.nextInt();
+                input.nextLine();
+                CheckOut bookedRoom = new CheckOut(customerID, roomID);
                 
                 for (Room room : hotel) {
                     if (room.roomID.equalsIgnoreCase(roomID)) {
-                        room.setIsRoomAvailable(false);
+                        room.setIsRoomAvailable(false);                        
+                        bookedRoom.setChargePerDay(room.getChargePerDay());
+                        bookedRoom.setBookStart();                        
+                        bookedRoom.setBookEnd();                     
+                        bookedRoom.setSumDays(bookedRoom.getBookStart(), bookedRoom.getBookEnd());
+                        bookedRoom.setSumChargePerDays(room.getChargePerDay(), bookedRoom.getSumDays());
+                        System.out.println("Booking looks like: " + bookedRoom);
                         System.out.println("Room \""+roomID+"\" has now been booked, is room available for others to book? Result: \n"+room.isRoomAvailable);
+                        bookedRoom.printReceipt();                        
                         exit = true;
                     }
                 }
+                
+                
             }else
                 exit = true;
             

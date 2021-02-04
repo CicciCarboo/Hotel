@@ -16,9 +16,14 @@ public class Hotel{
     private static Connection connection = null;
     private static Statement sqlStatement = null;
     
-public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException {
     
-    try (Connection connection = DriverManager.getConnection(url, user, password)) {
+        try (Connection connection = DriverManager.getConnection(url, user, password)) {
+
+            System.out.println("Connection Succeeded!");
+
+            sqlStatement = connection.createStatement();          
+  
 
             System.out.println("Connection Succeeded!");
 
@@ -31,12 +36,8 @@ public static void main(String[] args) throws SQLException {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        finally {
-            connection.close();
-        }  
-    
-}  
-
-
-    
+//        finally {
+//            connection.close();
+//        }  
+    }
 }
