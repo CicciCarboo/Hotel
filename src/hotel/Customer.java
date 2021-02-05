@@ -63,9 +63,10 @@ public class Customer {
     }
     
     static void CustomersInput() throws SQLException{
-        PreparedStatement prepStat;
         
-        System.out.println("Create new customer!");
+        
+        PreparedStatement prepStat;
+        System.out.println("Create new customer! Press enter");
         input.nextLine();
         System.out.print("Write your FirstName: ");
         String firstName = input.nextLine();
@@ -73,8 +74,7 @@ public class Customer {
         String lastName= input.nextLine();
         System.out.print("Write your email address: ");
         String email = input.nextLine();
-       
-        int custId=0;
+       int custId=0;
        Hotel.connectDB();
 
         prepStat = Hotel.connection.prepareStatement("INSERT INTO customers VALUE(?,?,?,?)"); 
@@ -84,5 +84,7 @@ public class Customer {
                         prepStat.setString(4, email);         
             prepStat.executeUpdate();
         Hotel.closeConDB();
+    
     }
+    
 }

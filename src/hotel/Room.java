@@ -179,17 +179,16 @@ public class Room implements Serializable{
         for (Room room : hotel) {
             ++i;
             room.setRoomID("R"+i);
-//             fields in room table to fill: roomId, roomName, ChargePerDay, available
-            Hotel.connectDB();
-            prepStat = Hotel.connection.prepareStatement("INSERT INTO room VALUE(?,?,?,?)"); //Null pointer exception här! Varför?
-//                                                                                             Svar: connection.close() på fel ställe               
-                        prepStat.setString(1, room.getRoomID());                          // avhjälps med specifik metod för connection och     
-                        prepStat.setString(2, room.getRoomName());                        // connection.close().                
-                        prepStat.setInt(3, room.getChargePerDay());
-                        prepStat.setInt(4,1);
-            
-            prepStat.executeUpdate();
-            Hotel.closeConDB();
+            // fields in room table to fill: roomId, roomName, ChargePerDay, available
+//            Hotel.connectDB();
+//            prepStat = Hotel.connection.prepareStatement("INSERT INTO room VALUE(?,?,?,?)"); //Null pointer exception här! Varför?
+//                        prepStat.setString(1, room.getRoomID());
+//                        prepStat.setString(2, room.getRoomName());
+//                        prepStat.setInt(3, room.getChargePerDay());
+//                        prepStat.setInt(4,1);
+//            
+//            prepStat.executeUpdate();
+//            Hotel.closeConDB();
         }           
 
         System.out.println("Whats in the hotel?");
