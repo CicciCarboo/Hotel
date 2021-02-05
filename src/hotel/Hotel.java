@@ -17,7 +17,6 @@ public class Hotel{
     private static final String user = "root";
     private static final String password = "Youkhanna86";
     protected static Connection connection = null;
-    private static Statement sqlStatement = null;
     
     public static void main(String[] args) throws SQLException {
     

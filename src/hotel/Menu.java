@@ -1,7 +1,6 @@
 
 package hotel;
 
-import static hotel.Room.input;
 import java.sql.SQLException;
 import java.util.*;
 

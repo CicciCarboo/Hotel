@@ -10,18 +10,15 @@ TODO: 1) Pull isRoomAvailable-info from database AND
 //          author C. Carboo
 package hotel;
 
-import static hotel.Hotel.sqlStatement;
+
 import java.io.Serializable;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 

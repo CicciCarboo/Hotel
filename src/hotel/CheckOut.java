@@ -1,14 +1,8 @@
 
 package hotel;
 
-import static hotel.Hotel.input;
-import static hotel.Hotel.result;
-import static hotel.Room.sqlStatement;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.ObjectOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +10,6 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 /**
