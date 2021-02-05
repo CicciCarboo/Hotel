@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 
@@ -15,16 +16,16 @@ public class Hotel{
     private static final String url = "jdbc:mysql://localhost:3306/Hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String user = "root";
     private static final String password = "test";
-    private static Connection connection = null;
-    private static Statement sqlStatement = null;
+    protected static Connection connection = null;
+    protected static Statement sqlStatement;
+    protected static ResultSet result;
+    protected static Scanner input = new Scanner(System.in);
     
     public static void main(String[] args) throws SQLException {
     
-        
         }
     
-    public static void connectDB(){
-        
+    public static void connectDB(){        
           try{
               connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connection Succeeded!");

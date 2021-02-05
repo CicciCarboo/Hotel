@@ -1,11 +1,15 @@
 
 package hotel;
 
+import static hotel.Hotel.input;
+import static hotel.Hotel.result;
+import static hotel.Room.sqlStatement;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.ObjectOutputStream;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,7 +24,14 @@ import java.util.Scanner;
  * @author Cicci Carboo
  */
 public class CheckOut {
-    static Scanner input = new Scanner(System.in);
+    protected static Scanner input = new Scanner(System.in);
+    protected static ResultSet result;
+    protected static Statement sqlStatement;
+    protected static PreparedStatement prepStat;
+    protected static FileWriter fw;
+    protected static BufferedWriter buffer;
+    protected static String printOut;
+    protected static String foodPrintOut;
     
     protected int bookingID;
     protected int customerID;
@@ -85,19 +96,17 @@ public class CheckOut {
     }
 
     public void setBookStart() {
+        
         System.out.println("When do you want to begin your stay?");
-        System.out.print("Year by format YYYY: ");
-        int year = input.nextInt();
-        input.nextLine();
-        System.out.print("Month in digits MM: ");
-        int month = input.nextInt();
-        input.nextLine();
-        System.out.print("Day in digits DD: ");
-        int day = input.nextInt();        
-        input.nextLine();
+        System.out.println("Enter date by the format of YYYY-MM-DD: ");
+        try {
+            String stringInput = input.nextLine();
+            bookStart = LocalDate.parse(stringInput);
+        } catch (Exception e) {
+            System.err.println("Please use given format for your entry.");
+        }
         
-        bookStart = LocalDate.of(year, month, day);
-        
+         
     }
 
     public LocalDate getBookEnd() {
@@ -105,18 +114,15 @@ public class CheckOut {
     }
 
     public void setBookEnd() {
-        System.out.println("When do you want to check out?");
-        System.out.print("Year by format YYYY: ");
-        int year = input.nextInt();
-        input.nextLine();
-        System.out.print("Month in digits MM: ");
-        int month = input.nextInt();
-        input.nextLine();
-        System.out.print("Day in digits DD: ");
-        int day = input.nextInt();        
-        input.nextLine();
         
-        bookEnd = LocalDate.of(year, month, day);
+        System.out.println("When do you want to check out?");
+        System.out.println("Enter date by the format of: YYYY-MM-DD");            
+        try {
+            String stringInput = input.nextLine();
+        bookEnd = LocalDate.parse(stringInput); 
+        } catch (Exception e) {
+        System.err.println("Please use given format for your entry.");
+        }
     }
 
     public int getSumDays() {
@@ -159,26 +165,55 @@ public class CheckOut {
     }        
                           
     public static void customerCheckOut() throws SQLException{
-        Statement sqlStatement = null;
-        System.out.print("\nEnter booking ID: ");
-        int RoomsCheckout_id = input.nextInt();
-        input.nextLine();
-        ResultSet rs = sqlStatement.executeQuery("SELECT * FROM booking WHERE bookingID " + RoomsCheckout_id);
-        System.out.println("\nQuery:'SELECT * FROM booking'\n");
         
-        while (rs.next()) {
-            System.out.println("Result from booking query:" + rs);
+        String roomID ="";
+        System.out.print("\nEnter booking ID: ");
+        int roomscheckout_Id = input.nextInt();
+        input.nextLine();        
+        printReceipt(roomscheckout_Id);
+       
+// Make room available in checkout. Use the same query to get the info for the stream in bookingRoom searching for available rooms
+        Hotel.connectDB();       
+        sqlStatement = Hotel.connection.createStatement();
+        
+        result = sqlStatement.executeQuery("SELECT * FROM roomscheckout WHERE RoomsCheckout_id ="+roomscheckout_Id+"");
+        while (result.next()) {            
+            System.out.println("Record from booking nr: " + result.getString("RoomsCheckout_id")+", roomID: "+result.getString("roomId")+".");
+            roomID = result.getString("roomId");
         }
+
+        prepStat = Hotel.connection.prepareStatement("UPDATE room SET available = 1 WHERE roomID = ?");                                                                                                          
+                        prepStat.setString(1, roomID);                                                                  
+                        prepStat.executeUpdate();
+                        System.out.println("\nRoom changed to AVAILABLE in database.");        
+        Hotel.closeConDB();
+
     }
     
-    public void printReceipt(){ //Not possible to print specific values from entire objects.
-                                                    // better to stream object into, return a result and place it into the buffered writer!
+    public static void printReceipt(int roomscheckout_Id) throws SQLException{ //Not possible to print specific values from entire objects.
+                          // better to stream object into, return a result and place it into the buffered writer!
+        int custId=0;                                            
+        Hotel.connectDB();
+        sqlStatement = Hotel.connection.createStatement();
+        result = sqlStatement.executeQuery("SELECT * FROM roomscheckout WHERE RoomsCheckout_id ="+roomscheckout_Id+"");
+        while (result.next()) {            
+            System.out.println("Record from booking: " + result.getString("RoomsCheckout_id")+", "+result.getString("roomId")+", "+result.getString("custId")+
+                    result.getString("Bookings_date")+", "+result.getString("numbersOfDays")+", "+result.getString("checkout_date")+", "+ result.getString("total_cost")+".");
+            custId = Integer.parseInt(result.getString("custId"));
+            printOut = "\n\t\t**** Thank you for staying at Elite Hotel ****\n\nRecord from booking: \nBooking number: " + result.getString("RoomsCheckout_id")+",\nCustomer ID: "+result.getString("custId")+"\nRoom number: "+result.getString("roomId")+"\nBooking date: "+
+                    result.getString("Bookings_date")+"\nCheckout date: "+result.getString("checkout_date")+"\nTotal amount of nights booked: "+result.getString("numbersOfDays")+
+                    "\nTotal cost for room: "+ result.getString("total_cost")+"SEK.\n\nFood orders:\n";
+        }        
+        Hotel.closeConDB();
         
+        sumFood(custId);
+                                                    
         try {
-              FileWriter fw = new FileWriter("CheckOutReceipt.txt");
-              BufferedWriter buffer = new BufferedWriter(fw);
+              fw = new FileWriter("CheckOutReceipt.txt");
+              buffer = new BufferedWriter(fw);
+              String welcomeBack = "\n\t\t******** Welcome back! ********";
               
-              buffer.write("\n"+ toString());
+              buffer.write(printOut+foodPrintOut+welcomeBack);
               buffer.newLine();
               System.out.println("Printing out receipt successfully.");
               buffer.close();
@@ -187,6 +222,24 @@ public class CheckOut {
         } catch (Exception e) {
             System.err.println(e);
         }
+    }
+    
+    public static void sumFood (int custId)throws SQLException{
+        // Controll database for food orders from custID. If: do something, else: ignore and abort.
+        //name, price, discount, custId
+        Hotel.connectDB();
+        sqlStatement = Hotel.connection.createStatement();
+        result = sqlStatement.executeQuery("SELECT * FROM food WHERE custId ="+custId+"");
+        while (result.next()) {            
+            System.out.println("Record from food orders: " + result.getString("name")+", price: "+result.getString("price")+", discount: "+
+                    result.getString("discount")+", customer ID: "+result.getString("custId")+". ");
+           
+            foodPrintOut = "Record from food orders: " + result.getString("name")+", price: "+result.getString("price")+", discount: "+
+                    result.getString("discount")+", customer ID: "+result.getString("custId")+". ";
+        }
+        
+        
+        Hotel.closeConDB();
     }
     
 }

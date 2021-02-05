@@ -1,6 +1,8 @@
 
 /* QUESTIONS
-TODO: return booking ID after booking. Get it from database.
+TODO: 1) Pull isRoomAvailable-info from database AND
+        return booking ID after booking. Get it from database.
+      2) add customerID as foreign key to checkout table.  
 
     For fun: Add to roomAvailability() : efter booking, run interface methods for the specific room.
 */
@@ -8,9 +10,11 @@ TODO: return booking ID after booking. Get it from database.
 //          author C. Carboo
 package hotel;
 
+import static hotel.Hotel.sqlStatement;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -24,6 +28,9 @@ import java.util.stream.Collectors;
 public class Room implements Serializable{
     // Superclass/parentclass to all Room classes
     protected static Scanner input = new Scanner(System.in);
+    protected static Statement sqlStatement;
+    protected static PreparedStatement prepStat;
+    protected static ResultSet result;
     
     
     public static List<Room> hotel = new LinkedList<Room>();
@@ -147,8 +154,8 @@ public class Room implements Serializable{
     
     public static void generateHotel() throws SQLException{         // author C. Carboo
         
-        Statement sqlStatement = null;
-        PreparedStatement prepStat;
+//        Statement sqlStatement = null;
+//        PreparedStatement prepStat;
         // Autofilling the hotel with rooms
                                                // For fun: try this later on: IntStream.range(0, 10).map(y -> 2 + y * 2).forEach(arraylist::add);
         for (int i = 0; i < 10; i++) {
@@ -172,11 +179,12 @@ public class Room implements Serializable{
         for (Room room : hotel) {
             ++i;
             room.setRoomID("R"+i);
-            // fields in room table to fill: roomId, roomName, ChargePerDay, available
+//             fields in room table to fill: roomId, roomName, ChargePerDay, available
             Hotel.connectDB();
             prepStat = Hotel.connection.prepareStatement("INSERT INTO room VALUE(?,?,?,?)"); //Null pointer exception här! Varför?
-                        prepStat.setString(1, room.getRoomID());
-                        prepStat.setString(2, room.getRoomName());
+//                                                                                             Svar: connection.close() på fel ställe               
+                        prepStat.setString(1, room.getRoomID());                          // avhjälps med specifik metod för connection och     
+                        prepStat.setString(2, room.getRoomName());                        // connection.close().                
                         prepStat.setInt(3, room.getChargePerDay());
                         prepStat.setInt(4,1);
             
@@ -184,21 +192,20 @@ public class Room implements Serializable{
             Hotel.closeConDB();
         }           
 
-//        System.out.println("Whats in the hotel?");
-//            
-//        for (Room room : hotel) {
-//            System.out.println(room);
-//        }
-//                        
+        System.out.println("Whats in the hotel?");
+            
+        for (Room room : hotel) {
+            System.out.println(room);
+        }
+                        
 //        System.out.println("Hur många rum blev det i hotellet? Svar: "+hotel.size());    
 //            
     }
     
-    public static <E> void genericDisplayMethod(E e1,E e2,E e3,E e4){ // make Generic???
+    public static <E> void genericDisplayMethod(E e1,E e2,E e3,E e4){ // Generic method
         
         boolean exit= false;
-        while (!exit) {            
-            
+        while (!exit) {                        
         
         System.out.println("********************* DISPLAY DETAILS *********************");
         
@@ -225,13 +232,10 @@ public class Room implements Serializable{
         } catch (Exception e) {
             input.nextLine();
             System.err.println("Wrong input. Try again:");
-        }
-        
-        }
-        
+        }        
+        }        
     }
-    
-  
+      
     public static void roomAvailability(){      // author C. Carboo
 
 //      Prompting user to choose room catecory from the menu. 
@@ -284,8 +288,7 @@ public class Room implements Serializable{
                 System.err.print("Wrong input. Try again:");
             }
             
-         } while (!exit);
-    
+         } while (!exit);    
     }
     
     public static void findRoomCategory(String choice){     //author C. Carboo 
@@ -303,9 +306,8 @@ public class Room implements Serializable{
     }
     
     public static void bookRoom() throws SQLException{      // author C. Carboo
-        Connection connection = null;
-        Statement sqlStatement = null;
-        PreparedStatement prepStat;
+        
+        
 //      Prompting user to choose if to continue to booking or not. If so, user gives roomID.
 //      Searching through the arrayList for matching room ID, setting equivalent room to not available.
         boolean exit=false;
@@ -316,41 +318,60 @@ public class Room implements Serializable{
                 System.out.print("\nEnter desired room ID: ");
                 String roomID = input.nextLine();
                 System.out.print("\nEnter customer ID: ");
-                int customerID = input.nextInt();
+                int custId = input.nextInt();
                 input.nextLine();
-                CheckOut bookedRoom = new CheckOut(customerID, roomID);
+                CheckOut bookedRoom = new CheckOut(custId, roomID);
                 
                 for (Room room : hotel) {
                     if (room.roomID.equalsIgnoreCase(roomID)) {
                         room.setIsRoomAvailable(false);                        
                         bookedRoom.setChargePerDay(room.getChargePerDay());
                         bookedRoom.setBookStart();                        
-                        bookedRoom.setBookEnd();                     
+                        bookedRoom.setBookEnd(); 
                         bookedRoom.setSumDays(bookedRoom.getBookStart(), bookedRoom.getBookEnd());
                         bookedRoom.setSumChargePerDays(room.getChargePerDay(), bookedRoom.getSumDays());
+                       // dates changed to String from LocalDate, so this method does not work. bookedRoom.setSumDays(bookedRoom.getBookStart(), bookedRoom.getBookEnd());
+                        //bookedRoom.setSumChargePerDays(room.getChargePerDay(), bookedRoom.getSumDays());
                         System.out.println("\nBooking looks like: " + bookedRoom);
                         
-                        System.out.println("\nStoring booking information on database...");
-                        //prepared statement for database
-                        //Table room, values to fill: roomId, roomName, ChargePerDay.....and eventually: available 
-  /*Kolla om detta är rätt sätt att skriva?*/prepStat = connection.prepareStatement("UPDATE room WHERE roomID ? VALUE(?)");
-                        prepStat.setString(1, room.getRoomID());
-                        prepStat.setInt(4, 0);  // SQL column available är en boolean, men visar 1 för true och 0 för false.                      
+                        System.out.println("\nStoring booking information on database...");                        
                         
+                        //prepared statement for database setting room to unavailable
+                        Hotel.connectDB();
                         
-                        //Values to fill: roomId, Bookings_date, numbersOfDays, checkout_date, total_cost
-                        prepStat = connection.prepareStatement("INSERT INTO roomscheckout VALUES(?,?,?,?)");
-                        prepStat.setString(1, bookedRoom.getRoomID());
-                        prepStat.setObject(2, bookedRoom.getBookStart());
-                        prepStat.setInt(1, bookedRoom.getSumDays());
-                        prepStat.setObject(1, bookedRoom.getBookEnd());
-                        prepStat.setInt(1, bookedRoom.getSumChargePerDays());
+                        prepStat = Hotel.connection.prepareStatement("UPDATE room SET available = 0 WHERE roomID = ?;");                                                                                                          
+                        prepStat.setString(1, roomID);                                                                  
                         prepStat.executeUpdate();
-                        connection.close();
+                        System.out.println("Changed room to UNAVAILABLE in database.");
+                        
+                        //prepared statement for database to fill table roomscheckout                              
+                        System.out.println("Try to fill table roomscheckout...");
+                        //Values to fill: RoomsCheckout_id, roomId, Bookings_date, numbersOfDays, checkout_date, total_cost
+      // ADDING SOON: Value customerID
+                        int RoomsCheckout_id = 0;
+                        prepStat = Hotel.connection.prepareStatement("INSERT INTO roomscheckout VALUES(?,?,?,?,?,?,?)");
+                        prepStat.setInt(1, RoomsCheckout_id);
+                        prepStat.setString(2,roomID);
+                        prepStat.setInt(3,custId);
+                        prepStat.setObject(4, bookedRoom.getBookStart());
+                        prepStat.setInt(5, bookedRoom.getSumDays());
+                        prepStat.setObject(6, bookedRoom.getBookEnd());
+                        prepStat.setInt(7, bookedRoom.getSumChargePerDays());
+                        prepStat.executeUpdate();
+                        //System.out.println("Table roomscheckout in database updated.");
+                        Hotel.closeConDB();                   
                         System.out.println("\nDatabase is up to date!");
                         
-                        System.out.println("\nRoom \""+roomID+"\" has now been booked, is room available for others to book? Result: \n"+room.isRoomAvailable);
-                        bookedRoom.printReceipt();                        
+                        System.out.println("Retrieving booking number from database....");
+                        Hotel.connectDB();
+                        sqlStatement = Hotel.connection.createStatement();
+                        result = sqlStatement.executeQuery("SELECT * FROM roomscheckout WHERE roomId ='"+roomID+"'");
+                        
+                        while (result.next()) {            
+                        System.out.println("Your booking nr for room "+roomID+" is: " + result.getString("RoomsCheckout_id"));
+                        }
+                        Hotel.closeConDB();                      
+                                            
                         exit = true;
                     }
                 }

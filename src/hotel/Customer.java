@@ -2,6 +2,7 @@
 package hotel;
 
 import static hotel.Room.input;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -62,6 +63,8 @@ public class Customer {
     }
     
     static void CustomersInput() throws SQLException{
+        PreparedStatement prepStat;
+        
         System.out.println("Create new customer!");
         input.nextLine();
         System.out.print("Write your FirstName: ");
@@ -71,12 +74,15 @@ public class Customer {
         System.out.print("Write your email address: ");
         String email = input.nextLine();
        
-        try {
-             System.out.println("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");     
-        sqlStatement.executeUpdate("INSERT INTO customers(firstName, lastName, email) VALUES('"+firstName+"', '"+lastName+"', '"+email+"');");
-  
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-         }
+        int custId=0;
+       Hotel.connectDB();
+
+        prepStat = Hotel.connection.prepareStatement("INSERT INTO customers VALUE(?,?,?,?)"); 
+                        prepStat.setInt(1, custId);
+                        prepStat.setString(2, firstName);                       
+                        prepStat.setString(3, lastName);                                   
+                        prepStat.setString(4, email);         
+            prepStat.executeUpdate();
+        Hotel.closeConDB();
+    }
 }
