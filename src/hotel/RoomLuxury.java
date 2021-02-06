@@ -4,6 +4,18 @@ package hotel;
 
 public class RoomLuxury extends Room implements Luxury{
     
+    // <editor-fold defaultstate="collapsed" desc=" Colorcodes ">
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+// </editor-fold>
+    
     public RoomLuxury() {
         super.setRoomID("");
         super.setAirCondition(true);
@@ -22,18 +34,18 @@ public class RoomLuxury extends Room implements Luxury{
     }
     
     @Override
-    public void enoyView() {
-        System.out.println("Feel free to enter the balcony, where chilled drinks are awaiting you.");
+    public void enjoyView() {
+        System.out.println(ANSI_GREEN+"\nFeel free to enter the balcony, where chilled drinks are awaiting you."+ANSI_RESET);
     }
 
     @Override
     public void startSauna() {
-        System.out.println("Welcome home. We have started the sauna for you. Enjoy a relaxing session in the sauna and cool of in the jacuzzi afterwards.");
+        System.out.println(ANSI_YELLOW+"\nWelcome home. We have started the sauna for you. Enjoy a relaxing session in the sauna and cool of in the jacuzzi afterwards."+ANSI_RESET);
     }
 
     @Override
     public void enjoyLoungeGroup() {
-        System.out.println("Aaah, how luxurious. Now you can entertain your guests in this lounge group, fit for a king!");
+        System.out.println(ANSI_PURPLE+"\nAaah, how luxurious. Now you can entertain your guests in this lounge group, fit for a king!"+ANSI_RESET);
     }
 
 }

@@ -55,13 +55,13 @@ public class Menu {
                 System.out.println("1. Display room details");
                 System.out.println("2. Display room availability");
                 System.out.println("3. Order food");
-                System.out.println("4. Back to start menu");
-            
+                System.out.println("4. Checkout");
+                System.out.println("5. Back to start menu");            
 
             // Ta in text från användaren
             Scanner scan = new Scanner(System.in);
             String userInput = scan.nextLine().toLowerCase(); // Omvandla input till lower case för jämförelse
-            Room.generateHotel();
+
             if (userInput.equals("1") || userInput.contains("details")) {
                 System.out.println(newLine + "Room details selected");
                 
@@ -79,8 +79,11 @@ public class Menu {
 
             } else if (userInput.equals("3") || userInput.contains("Food")) {               
                 Food.foodMenu();
+            
+            } else if (userInput.equals("4") || userInput.contains("Checkout")) {               
+                CheckOut.customerCheckOut();
 
-            } else if (userInput.equals("4") || userInput.contains("exit") || userInput.contains("quit")) {
+            } else if (userInput.equals("5") || userInput.contains("exit") || userInput.contains("quit")) {
                 break; // Gå tillbaka till start menu
             } else {
                 System.out.println("Unknown input. Try again!" + newLine);

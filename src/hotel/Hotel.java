@@ -15,14 +15,17 @@ public class Hotel{
     
     private static final String url = "jdbc:mysql://localhost:3306/Hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String user = "root";
-    private static final String password = "Youkhanna86";
+    private static final String password = "56ultra78Violett9";
     protected static Connection connection = null;
-    
+     protected static Statement sqlStatement;
+    protected static PreparedStatement prepStat;
+    protected static ResultSet result;
     public static void main(String[] args) throws SQLException {
     
-        Menu.startMenu();
+//        Menu.startMenu();
         
-//            Room.generateHotel();
+            Room.generateHotel();
+
         }
     
     public static void connectDB(){        

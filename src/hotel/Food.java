@@ -93,17 +93,8 @@ public static void foodMenu() throws SQLException{
         
         System.out.println("Register order of " + getName()+ " to database.");
         
-        String name = getName();
-        int price = getPrice();
-//        input.nextLine();
-//        System.out.print("Write your FirstName: ");
-//        String firstName = input.nextLine();
-//        System.out.print("Write your LastName: ");
-//        String lastName= input.nextLine();
-//        System.out.print("Write your email address: ");
-//        String email = input.nextLine();
-       
-        //int custId=0;
+//        String name = getName();
+//        int price = getPrice();
        Hotel.connectDB();
 
         prepStat = Hotel.connection.prepareStatement("INSERT INTO food (name, price, custId)VALUE(?,?,?)"); 

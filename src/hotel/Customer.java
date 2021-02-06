@@ -2,7 +2,9 @@
 package hotel;
 
 import static hotel.Room.input;
+import static hotel.Room.sqlStatement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -13,6 +15,7 @@ public class Customer {
     private String lastName;
     private String email;
     private static Statement sqlStatement = null;
+    protected static ResultSet result;
     public Customer() {
     }
     
@@ -66,8 +69,7 @@ public class Customer {
         
         
         PreparedStatement prepStat;
-        System.out.println("Create new customer! Press enter");
-        input.nextLine();
+        System.out.println("Create new customer!");
         System.out.print("Write your FirstName: ");
         String firstName = input.nextLine();
         System.out.print("Write your LastName: ");
@@ -83,8 +85,16 @@ public class Customer {
                         prepStat.setString(3, lastName);                                   
                         prepStat.setString(4, email);         
             prepStat.executeUpdate();
+         
+                        sqlStatement = Hotel.connection.createStatement();
+                        result = sqlStatement.executeQuery("SELECT * FROM customers WHERE email ='"+email+"'");
+                        
+                        while (result.next()) {            
+                        System.out.println("\nYour customer ID is: " + result.getString("custId"));
+                        }    
         Hotel.closeConDB();
-    
+        System.out.println("Press ENTER to continue to previous menu.");
+        input.nextLine();
     }
     
 }

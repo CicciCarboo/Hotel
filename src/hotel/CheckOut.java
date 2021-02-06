@@ -34,8 +34,8 @@ public class CheckOut {
     protected int sumDays; // Subtract bookStart from bookEnd
     protected int chargePerDay;
     protected int sumChargePerDays; // chargePerNight times sumNights
-     ArrayList<Food> mealsOrdered = new ArrayList<>(); // List(arrayList?) with all orderd Food objects, put as stream, count their prices and amount of orders.
-     ArrayList<CheckOut> bookedDays = new ArrayList<>(); // List(arrayList?) with all orderd Booking object, put as stream, count their prices.
+//     ArrayList<Food> mealsOrdered = new ArrayList<>(); // List(arrayList?) with all orderd Food objects, put as stream, count their prices and amount of orders.
+//     ArrayList<CheckOut> bookedDays = new ArrayList<>(); // List(arrayList?) with all orderd Booking object, put as stream, count their prices.
     protected int sumCostMeals = 0;
 
     public CheckOut(int customerID, String roomID) {
@@ -154,7 +154,9 @@ public class CheckOut {
 
     @Override
     public String toString() {
-        return "Booking " + bookingID + ", customerID=" + customerID + ", roomID=" + roomID + ", bookStart=" + bookStart + ", bookEnd=" + bookEnd + ", sumNights=" + sumDays + ", chargePerNight=" + chargePerDay + ", sumChargePerDays=" + sumChargePerDays + ", mealsOrdered=" + mealsOrdered + ", bookedNights=" + bookedDays + ", sumCostMeals=" + sumCostMeals + '}';
+        return "Booking " + bookingID + ", customerID=" + customerID + ", roomID=" + roomID + ", bookStart=" + bookStart +
+                ", bookEnd=" + bookEnd + ", sumNights=" + sumDays + ", chargePerNight=" + chargePerDay + 
+                ", sumChargePerDays=" + sumChargePerDays + ".";//", mealsOrdered=" + mealsOrdered +  + ", sumCostMeals=" + sumCostMeals +", bookedNights=" + bookedDays +
     }        
                           
     public static void customerCheckOut() throws SQLException{
@@ -163,10 +165,11 @@ public class CheckOut {
         System.out.print("\nEnter booking ID: ");
         int roomscheckout_Id = input.nextInt();
         input.nextLine();        
-        printReceipt(roomscheckout_Id);
        
 // Make room available in checkout. Use the same query to get the info for the stream in bookingRoom searching for available rooms
-        Hotel.connectDB();       
+        Hotel.connectDB();    
+        printReceipt(roomscheckout_Id);
+
         sqlStatement = Hotel.connection.createStatement();
         
         result = sqlStatement.executeQuery("SELECT * FROM roomscheckout WHERE RoomsCheckout_id ="+roomscheckout_Id+"");
@@ -186,25 +189,24 @@ public class CheckOut {
     public static void printReceipt(int roomscheckout_Id) throws SQLException{ //Not possible to print specific values from entire objects.
                           // better to stream object into, return a result and place it into the buffered writer!
         int custId=0;                                            
-        Hotel.connectDB();
+        //Hotel.connectDB();
         sqlStatement = Hotel.connection.createStatement();
         result = sqlStatement.executeQuery("SELECT * FROM roomscheckout WHERE RoomsCheckout_id ="+roomscheckout_Id+"");
         while (result.next()) {            
             System.out.println("Record from booking: " + result.getString("RoomsCheckout_id")+", "+result.getString("roomId")+", "+result.getString("custId")+
                     result.getString("Bookings_date")+", "+result.getString("numbersOfDays")+", "+result.getString("checkout_date")+", "+ result.getString("total_cost")+".");
             custId = Integer.parseInt(result.getString("custId"));
-            printOut = "\n\t\t**** Thank you for staying at Elite Hotel ****\n\nRecord from booking: \nBooking number: " + result.getString("RoomsCheckout_id")+",\nCustomer ID: "+result.getString("custId")+"\nRoom number: "+result.getString("roomId")+"\nBooking date: "+
+            printOut = "\n\n\t\t**** Thank you for staying at Elite Hotel ****\n\nRecord from booking: \nBooking number: " + result.getString("RoomsCheckout_id")+",\nCustomer ID: "+result.getString("custId")+"\nRoom number: "+result.getString("roomId")+"\nBooking date: "+
                     result.getString("Bookings_date")+"\nCheckout date: "+result.getString("checkout_date")+"\nTotal amount of nights booked: "+result.getString("numbersOfDays")+
                     "\nTotal cost for room: "+ result.getString("total_cost")+"SEK.\n\nFood orders:\n";
-        }        
-        Hotel.closeConDB();
-        
+        }                
         sumFood(custId);
-                                                    
+        
+        //Hotel.closeConDB();                                            
         try {
               fw = new FileWriter("CheckOutReceipt.txt");
               buffer = new BufferedWriter(fw);
-              String welcomeBack = "\n\t\t******** Welcome back! ********";
+              String welcomeBack = "\n\n\n\t\t\t******** Welcome back! ********";
               
               buffer.write(printOut+foodPrintOut+welcomeBack);
               buffer.newLine();
@@ -220,19 +222,19 @@ public class CheckOut {
     public static void sumFood (int custId)throws SQLException{
         // Controll database for food orders from custID. If: do something, else: ignore and abort.
         //name, price, discount, custId
-        Hotel.connectDB();
+       // Hotel.connectDB();
         sqlStatement = Hotel.connection.createStatement();
         result = sqlStatement.executeQuery("SELECT * FROM food WHERE custId ="+custId+"");
         while (result.next()) {            
             System.out.println("Record from food orders: " + result.getString("name")+", price: "+result.getString("price")+", discount: "+
                     result.getString("discount")+", customer ID: "+result.getString("custId")+". ");
            
-            foodPrintOut = "Record from food orders: " + result.getString("name")+", price: "+result.getString("price")+", discount: "+
+            foodPrintOut += "\nRecord from food orders: " + result.getString("name")+", price: "+result.getString("price")+", discount: "+
                     result.getString("discount")+", customer ID: "+result.getString("custId")+". ";
         }
         
         
-        Hotel.closeConDB();
+       // Hotel.closeConDB();
     }
     
 }

@@ -30,6 +30,7 @@ public class Room implements Serializable{
     protected static ResultSet result;
     
     
+    
     public static List<Room> hotel = new LinkedList<Room>();
     protected String roomID;
     protected String roomName = "Standard single room";
@@ -188,14 +189,14 @@ public class Room implements Serializable{
 //            Hotel.closeConDB();
         }           
 
-        System.out.println("Whats in the hotel?");
-            
-        for (Room room : hotel) {
-            System.out.println(room);
-        }
+//        System.out.println("Whats in the hotel?");
+//            
+//        for (Room room : hotel) {
+//            System.out.println(room);
+//        }
                         
 //        System.out.println("Hur många rum blev det i hotellet? Svar: "+hotel.size());    
-//            
+            Menu.startMenu();
     }
     
     public static <E> void genericDisplayMethod(E e1,E e2,E e3,E e4){ // Generic method
@@ -255,22 +256,22 @@ public class Room implements Serializable{
                     case 1:
                         choice = "Standard single room";
                         findRoomCategory(choice);
-                        bookRoom();
+                        bookRoom(choice);
                         break;
                     case 2:
                         choice = "Single deluxe room";
                         findRoomCategory(choice);
-                        bookRoom();
+                        bookRoom(choice);
                         break;
                     case 3:
                         choice = "Double deluxe room";
                         findRoomCategory(choice);
-                        bookRoom();
+                        bookRoom(choice);
                         break;
                     case 4:
                         choice = "Luxury room";
                         findRoomCategory(choice);
-                        bookRoom();
+                        bookRoom(choice);
                         break;
                     case 5:
                         System.out.println("Exiting to previous menu.");
@@ -301,7 +302,7 @@ public class Room implements Serializable{
             System.out.println("RoomID: " + r.roomID);          
     }
     
-    public static void bookRoom() throws SQLException{      // author C. Carboo
+    public static void bookRoom(String roomChoice) throws SQLException{      // author C. Carboo
         
         
 //      Prompting user to choose if to continue to booking or not. If so, user gives roomID.
@@ -367,15 +368,34 @@ public class Room implements Serializable{
                         System.out.println("Your booking nr for room "+roomID+" is: " + result.getString("RoomsCheckout_id"));
                         }
                         Hotel.closeConDB();                      
-                                            
+                        
+                        roomInterface(roomChoice);
                         exit = true;
                     }
-                }
-                
-                
+                }         
             }else
-                exit = true;
-            
+                exit = true;            
         } while (!exit);       
+    }
+    
+    public static void roomInterface(String roomChoice){
+         Room r = new Room();
+         RoomSingleDeluxe sd = new RoomSingleDeluxe();
+         RoomDoubleDeluxe dd = new RoomDoubleDeluxe();
+         RoomLuxury l = new RoomLuxury();
+         
+         if (roomChoice.equalsIgnoreCase("Single deluxe room")) {
+            sd.closeCurtins();
+            sd.startAirCondition();
+            sd.startTV();
+        }if (roomChoice.equalsIgnoreCase("Double deluxe room")) {
+            dd.closeCurtins();
+            dd.startAirCondition();
+            dd.startTV();
+        }if (roomChoice.equalsIgnoreCase("Luxury room")) {
+            l.startSauna();
+            l.enjoyView();
+            l.enjoyLoungeGroup();
+        }
     }
 }

@@ -1,14 +1,20 @@
 
+
 		**** Thank you for staying at Elite Hotel ****
+
 Record from booking: 
-Booking number: 5,
-Customer ID: 3
-Room number: 23R
-Booking date: 2021-02-05 00:00:00
-Checkout date: 2021-02-06 00:00:00
-Total amount of nights booked: 1
-Total cost for room: 3000SEK.
+Booking number: 10,
+Customer ID: 22
+Room number: R1
+Booking date: 2021-02-15 00:00:00
+Checkout date: 2021-02-17 00:00:00
+Total amount of nights booked: 2
+Total cost for room: 2000SEK.
 
 Food orders:
 null
-		******** Welcome back! ********
+Record from food orders: Noodles, price: 170, discount: null, customer ID: 22. 
+Record from food orders: Drink, price: 30, discount: null, customer ID: 22. 
+
+
+			******** Welcome back! ********

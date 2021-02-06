@@ -3,6 +3,18 @@ package hotel;
 
 public class RoomDoubleDeluxe extends Room implements Deluxe{
 
+    // <editor-fold defaultstate="collapsed" desc=" Colorcodes ">
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+// </editor-fold>
+    
     public RoomDoubleDeluxe() {
         super.setRoomID("");
         super.setAirCondition(true);
@@ -22,26 +34,17 @@ public class RoomDoubleDeluxe extends Room implements Deluxe{
     
     @Override
     public void closeCurtins() {
-        System.out.println("Welcome home. The curtins are closed automatically.");
+        System.out.println(ANSI_YELLOW+"\nWelcome home. The curtins are closed automatically."+ANSI_RESET);
     }
 
     @Override
     public void startAirCondition() {
         if(airCondition == true)
-        System.out.println("Enjoy your air condition.");
+        System.out.println(ANSI_GREEN+"\nEnjoy your air condition."+ANSI_RESET);
     }
 
     @Override
     public void startTV() {
-        System.out.println("The TV is on. Use the remote control to choose your favorite channel.");
-    }
-//
-//    @Override
-//    public String toString() {
-//        return "DeluxeDoubleRoom{" + "roomID=" + roomID + ", roomName=" + roomName + ", typeOfBed=" + typeOfBed + ", viewFromRoom=" + viewFromRoom + ", bathroomUitilities=" + bathroomUitilities + ", furniture=" + furniture + ", roomDescription=" + roomDescription + ", airCondition=" + airCondition + ", freeBreakfast=" + freeBreakfast + ", isRoomAvailable=" + isRoomAvailable + ", chargePerDay=" + chargePerDay + '}';
-//    }
-    
-    
-
-    
+        System.out.println(ANSI_PURPLE+"\nThe TV is on. Use the remote control to choose your favorite channel."+ANSI_RESET);
+    }    
 }
